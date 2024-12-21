@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="h3">Clientes</h1>
+        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#clienteModal">
+            <i class="fas fa-plus"></i> Nuevo Cliente
+        </button>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Teléfono</th>
+                                    <th>Email</th>
+                                    <th>Dirección</th>
+                                    <th>Total Compras</th>
+                                    <th>Última Compra</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for cliente in clientes %}
+                                <tr>
+                                    <td>{{ cliente.nombre }}</td>
+                                    <td>{{ cliente.telefono or '-' }}</td>
+                                    <td>{{ cliente.email or '-' }}</td>
+                                    <td>{{ cliente.direccion or '-' }}</td>
+                                    <td>
+                                        ${{ "%.2f"|format(cliente.ventas|sum(attribute='total')) }}
+                                    </td>
+                                    <td>
+                                        {% if cliente.ventas %}
+                                            {{ cliente.ventas[-1].fecha.strftime('%d/%m/%Y') }}
+                                        {% else %}
+                                            Sin compras
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-sm btn-info" title="Editar">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="btn btn-sm btn-primary" title="Ver historial">
+                                            <i class="fas fa-history"></i>
+                                        </button>
+                                        <button class="btn btn-sm btn-danger" title="Eliminar">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% include 'components/modal_cliente.html' %}
+{% endblock %} 

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; }
+        .alert { color: #721c24; background-color: #f8d7da; padding: 15px; border-radius: 4px; }
+        .producto { margin: 20px 0; padding: 15px; border: 1px solid #ddd; }
+        .stock { color: #dc3545; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h2>Alerta de Stock Bajo</h2>
+    
+    <div class="alert">
+        Se ha detectado que el siguiente producto tiene un nivel de stock por debajo del mínimo establecido:
+    </div>
+
+    <div class="producto">
+        <h3>{{ producto.nombre }}</h3>
+        <p><strong>Código:</strong> {{ producto.codigo }}</p>
+        <p><strong>Stock Actual:</strong> <span class="stock">{{ producto.stock }}</span></p>
+        <p><strong>Stock Mínimo:</strong> {{ producto.stock_minimo }}</p>
+        <p><strong>Último Precio de Compra:</strong> ${{ "%.2f"|format(producto.precio_costo) }}</p>
+    </div>
+
+    <p>Por favor, considere realizar un nuevo pedido de este producto.</p>
+
+    <hr>
+    <p><small>Este es un mensaje automático del sistema SPC Suplementos.</small></p>
+</body>
+</html> 

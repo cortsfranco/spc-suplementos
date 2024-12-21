@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container-fluid">
+    <h1 class="h3 mb-4">Reportes y Estadísticas</h1>
+
+    <!-- Filtros de fecha -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <form class="row g-3" id="filtrosReporte">
+                <div class="col-md-4">
+                    <label class="form-label">Fecha Desde</label>
+                    <input type="date" class="form-control" name="fecha_desde" id="fecha_desde">
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">Fecha Hasta</label>
+                    <input type="date" class="form-control" name="fecha_hasta" id="fecha_hasta">
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">&nbsp;</label>
+                    <button type="submit" class="btn btn-primary d-block w-100">
+                        <i class="fas fa-sync"></i> Actualizar Reportes
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Tarjetas de resumen -->
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <div class="card bg-primary text-white">
+                <div class="card-body">
+                    <h6 class="card-title">Ventas Totales</h6>
+                    <h2 class="mb-0 formato-moneda">{{ totales.ventas }}</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-success text-white">
+                <div class="card-body">
+                    <h6 class="card-title">Ganancias</h6>
+                    <h2 class="mb-0 formato-moneda">{{ totales.ganancias }}</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-info text-white">
+                <div class="card-body">
+                    <h6 class="card-title">Cantidad de Ventas</h6>
+                    <h2 class="mb-0">{{ totales.cantidad_ventas }}</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-warning text-white">
+                <div class="card-body">
+                    <h6 class="card-title">Ticket Promedio</h6>
+                    <h2 class="mb-0 formato-moneda">{{ totales.ticket_promedio }}</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Gráficos -->
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Ventas por Día</h5>
+                    <canvas id="ventasPorDia"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Productos Más Vendidos</h5>
+                    <canvas id="productosMasVendidos"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tablas de datos -->
+    <div class="row mt-4">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Resumen de Ventas por Producto</h5>
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Producto</th>
+                                    <th>Cantidad Vendida</th>
+                                    <th>Total Ventas</th>
+                                    <th>Ganancia</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for producto in ventas_por_producto %}
+                                <tr>
+                                    <td>{{ producto.nombre }}</td>
+                                    <td>{{ producto.cantidad }}</td>
+                                    <td class="formato-moneda">{{ producto.total }}</td>
+                                    <td class="formato-moneda">{{ producto.ganancia }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="{{ url_for('static', filename='js/reportes.js') }}"></script>
+{% endblock %} 

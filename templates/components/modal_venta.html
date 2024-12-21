@@ -1,0 +1,92 @@
+<div class="modal fade" id="ventaModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Nueva Venta</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <form action="{{ url_for('ventas') }}" method="POST" id="ventaForm">
+                <div class="modal-body">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="cliente" class="form-label">Cliente</label>
+                            <select class="form-select" id="cliente" name="cliente_id" required>
+                                <option value="">Seleccionar cliente...</option>
+                                {% for cliente in clientes %}
+                                <option value="{{ cliente.id }}">{{ cliente.nombre }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="fecha" class="form-label">Fecha</label>
+                            <input type="date" class="form-control" id="fecha" name="fecha" required>
+                        </div>
+                    </div>
+                    
+                    <div class="productos-lista">
+                        <div class="row producto-item mb-2">
+                            <div class="col-md-4">
+                                <select class="form-select producto-select" name="productos[]" required>
+                                    <option value="">Seleccionar producto...</option>
+                                    {% for producto in productos %}
+                                    <option value="{{ producto.id }}" 
+                                            data-precio="{{ producto.precio_venta }}"
+                                            data-stock="{{ producto.stock }}">
+                                        {{ producto.nombre }}
+                                    </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <input type="number" class="form-control cantidad" 
+                                       name="cantidades[]" placeholder="Cantidad" required>
+                            </div>
+                            <div class="col-md-3">
+                                <input type="number" class="form-control precio" 
+                                       name="precios[]" placeholder="Precio" readonly>
+                            </div>
+                            <div class="col-md-2">
+                                <button type="button" class="btn btn-danger btn-remove-producto">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button type="button" class="btn btn-secondary mt-2" id="agregarProducto">
+                        <i class="fas fa-plus"></i> Agregar Producto
+                    </button>
+
+                    <div class="row mt-3">
+                        <div class="col-md-6">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="pagado" name="pagado">
+                                <label class="form-check-label" for="pagado">
+                                    Pagado
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="entregado" name="entregado">
+                                <label class="form-check-label" for="entregado">
+                                    Entregado
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mt-3">
+                        <div class="col-md-6 offset-md-6">
+                            <h4>Total: $<span id="total">0.00</span></h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Guardar Venta</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div> 

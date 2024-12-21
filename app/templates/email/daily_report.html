@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; }
+        th { background-color: #f8f9fa; }
+        .total { font-weight: bold; color: #28a745; }
+        .warning { color: #dc3545; }
+    </style>
+</head>
+<body>
+    <h2>Reporte Diario - SPC Suplementos</h2>
+    
+    <h3>Resumen de Ventas del Día</h3>
+    <table>
+        <tr>
+            <th>Total Ventas</th>
+            <td class="total">${{ "%.2f"|format(ventas.total_ventas) }}</td>
+        </tr>
+        <tr>
+            <th>Cantidad de Ventas</th>
+            <td>{{ ventas.cantidad_ventas }}</td>
+        </tr>
+        <tr>
+            <th>Ticket Promedio</th>
+            <td>${{ "%.2f"|format(ventas.ticket_promedio) }}</td>
+        </tr>
+    </table>
+
+    {% if productos %}
+    <h3>Productos con Stock Bajo</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Código</th>
+                <th>Producto</th>
+                <th>Stock Actual</th>
+                <th>Stock Mínimo</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for producto in productos %}
+            <tr>
+                <td>{{ producto.codigo }}</td>
+                <td>{{ producto.nombre }}</td>
+                <td class="warning">{{ producto.stock }}</td>
+                <td>{{ producto.stock_minimo }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+
+    <hr>
+    <p><small>Este reporte fue generado automáticamente por el sistema SPC Suplementos.</small></p>
+</body>
+</html> 

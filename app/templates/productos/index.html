@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="h3">Productos</h1>
+        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#productoModal">
+            <i class="fas fa-plus"></i> Nuevo Producto
+        </button>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover" id="productosTable">
+                    <thead>
+                        <tr>
+                            <th>Código</th>
+                            <th>Nombre</th>
+                            <th>Stock</th>
+                            <th>Precio Costo</th>
+                            <th>Precio Venta</th>
+                            <th>Ganancia</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for producto in productos %}
+                        <tr>
+                            <td>{{ producto.codigo }}</td>
+                            <td>{{ producto.nombre }}</td>
+                            <td>
+                                <span class="badge {% if producto.stock > producto.stock_minimo %}bg-success{% elif producto.stock > 0 %}bg-warning{% else %}bg-danger{% endif %}">
+                                    {{ producto.stock }}
+                                </span>
+                            </td>
+                            <td>${{ "%.2f"|format(producto.precio_costo) }}</td>
+                            <td>${{ "%.2f"|format(producto.precio_venta) }}</td>
+                            <td>${{ "%.2f"|format(producto.ganancia) }}</td>
+                            <td>
+                                {% if producto.stock_bajo %}
+                                <span class="badge bg-warning">Stock Bajo</span>
+                                {% else %}
+                                <span class="badge bg-success">Normal</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <div class="btn-group">
+                                    <button class="btn btn-sm btn-info" onclick="editarProducto({{ producto.id }})" title="Editar">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-success" onclick="ajustarStock({{ producto.id }})" title="Ajustar Stock">
+                                        <i class="fas fa-boxes"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-danger" onclick="eliminarProducto({{ producto.id }})" title="Eliminar">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% include 'productos/modal_producto.html' %}
+{% include 'productos/modal_stock.html' %}
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/productos.js') }}"></script>
+{% endblock %}
