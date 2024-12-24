@@ -45,13 +45,13 @@
                             </td>
                             <td>
                                 <div class="btn-group">
-                                    <button class="btn btn-sm btn-info" onclick="editarCliente({{ cliente.id }})" title="Editar">
+                                    <button class="btn btn-sm btn-info" onclick='editarCliente("{{ cliente.id }}")' title="Editar">
                                         <i class="fas fa-edit"></i>
                                     </button>
-                                    <button class="btn btn-sm btn-primary" onclick="verHistorial({{ cliente.id }})" title="Ver historial">
+                                    <button class="btn btn-sm btn-primary" onclick='verHistorial("{{ cliente.id }}")' title="Ver historial">
                                         <i class="fas fa-history"></i>
                                     </button>
-                                    <button class="btn btn-sm btn-danger" onclick="eliminarCliente({{ cliente.id }})" title="Eliminar">
+                                    <button class="btn btn-sm btn-danger" onclick='eliminarCliente("{{ cliente.id }}")' title="Eliminar">
                                         <i class="fas fa-trash"></i>
                                     </button>
                                 </div>
