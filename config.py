@@ -5,9 +5,8 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 load_dotenv(os.path.join(basedir, '.env'))
 
 class Config:
-    SECRET_KEY = os.environ.get('SECRET_KEY') or 'clave-secreta-por-defecto'
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
-        'sqlite:///' + os.path.join(basedir, 'app.db')
+    SECRET_KEY = os.environ.get('f1e44df99a36d851ffca0eaf85406c33') or 'dev-key-temporal'
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or 'postgresql://spc_imby_user:NqlUODe7jfa9TeT988cO0CI1tLt90RIz@dpg-ctjgkb52ng1s73bjimtg-a/spc_imby'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     
     # Configuración de correo
